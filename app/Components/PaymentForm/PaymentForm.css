@@ -1,0 +1,210 @@
+.payment-container {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f3f4f6;
+  font-family: sans-serif;
+}
+
+.payment-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+.payment-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 24px;
+  margin-top: 0;
+}
+
+/* --- Бутони за избор на метод --- */
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.method-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 8px;
+  background-color: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.method-btn:hover {
+  border-color: #d1d5db;
+  background-color: #f9fafb;
+}
+
+/* Активният (избран) метод */
+.method-btn.active {
+  border-color: #005cbf;
+  background-color: #f0f8ff; /* Много светло синьо */
+  color: #005cbf;
+}
+
+.method-icon {
+  font-size: 24px;
+  color: #9ca3af;
+  transition: color 0.2s;
+}
+
+.method-btn.active .method-icon {
+  color: #005cbf;
+}
+
+/* Специфични цветове за брандовете (по желание) */
+.method-btn:hover .paypal-color { color: #00457C; }
+.method-btn:hover .apple-color { color: #000000; }
+
+/* --- Форма за картата --- */
+.card-form {
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-group.half {
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  width: 100%;
+  font-family: inherit;
+}
+
+.form-group input:focus {
+  border-color: #005cbf;
+  box-shadow: 0 0 0 3px rgba(0, 92, 191, 0.1);
+}
+
+/* Поле с иконка вътре (за номера на картата) */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  padding-left: 40px; /* Правим място за иконката */
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: #9ca3af;
+  font-size: 16px;
+}
+
+/* --- Алтернативни методи (PayPal, Apple Pay) --- */
+.alternative-payment {
+  text-align: center;
+  padding: 24px 0 8px;
+  animation: fadeIn 0.3s ease;
+}
+
+.alt-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.alt-icon.paypal-color { color: #00457C; }
+.alt-icon.apple-color { color: #000000; }
+
+.alternative-payment p {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* --- Главен Бутон за Плащане --- */
+.pay-submit-btn {
+  background-color: #005cbf;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pay-submit-btn:hover {
+  opacity: 0.9;
+}
+
+.pay-submit-btn:active {
+  transform: scale(0.98);
+}
+
+.pay-submit-btn.paypal-bg {
+  background-color: #FFC439; /* Жълтият цвят на PayPal */
+  color: #000000;
+}
+
+.pay-submit-btn.apple-bg {
+  background-color: #000000; /* Черният цвят на Apple */
+  color: #ffffff;
+}
+
+.btn-inline-icon {
+  font-size: 24px;
+}

@@ -1,0 +1,256 @@
+/* --- Секция и Заглавие --- */
+.products-section {
+  padding: 40px 4%;
+  background-color: #ffffff;
+  font-family: sans-serif;
+}
+
+@media (min-width: 1024px) {
+  .products-section {
+    padding: 40px 12%;
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0;
+}
+
+.view-all-link {
+  color: #005cbf;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+/* --- МАГИЯТА НА РЕШЕТКАТА (CSS GRID) --- */
+.product-grid {
+  display: grid;
+  gap: 24px; /* Разстояние между картичките */
+  
+  /* По подразбиране (Мобилен телефон): 1 колона */
+  grid-template-columns: 1fr; 
+}
+
+/* Таблет: 2 колони */
+@media (min-width: 640px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Малък лаптоп: 3 колони */
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Голям екран (Десктоп): 4 колони */
+@media (min-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+/* --- СТИЛОВЕ ЗА САМАТА КАРТИЧКА (Product Card) --- */
+.product-card {
+  width: 100%;
+  /* ВАЖНО: Тук няма max-width, за да се разпъва по решетката! */
+  height: 100%; /* Прави всички картички еднакво високи */
+  background-color: #ffffff;
+  border: 1px solid #f3f4f6;
+  border-radius: 16px;
+  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.product-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: #dbeafe;
+}
+
+.badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  background-color: #f97316;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.product-image-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 160px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-info {
+  flex-grow: 1; /* Кара този блок да запълни празното пространство */
+  display: flex;
+  flex-direction: column;
+}
+
+.product-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  text-decoration: none;
+  margin-bottom: 4px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s;
+}
+
+.product-title:hover {
+  color: #005cbf;
+}
+
+.product-brand {
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.product-footer {
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.price-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.old-price {
+  font-size: 12px;
+  color: #9ca3af;
+  text-decoration: line-through;
+  margin-bottom: 2px;
+  height: 18px; /* Гарантира, че височината не се чупи, ако няма стара цена */
+}
+
+.current-price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.current-price {
+  color: #005cbf;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: flex-start;
+}
+
+.current-price .cents {
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.discount-badge {
+  background-color: #fee2e2;
+  color: #dc2626;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.add-to-cart-btn {
+  background-color: #f9fafb;
+  color: #005cbf;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #005cbf;
+  color: #ffffff;
+}
+
+/* --- МАГИЯТА НА РЕШЕТКАТА (CSS GRID) --- */
+.product-grid {
+  display: grid;
+  /* Намаляваме малко разстоянието по подразбиране, за да се съберат хубаво на малък екран */
+  gap: 12px; 
+  
+  /* По подразбиране (Мобилен телефон): вече е 2 колони */
+  grid-template-columns: repeat(2, 1fr); 
+}
+
+/* Таблет: 3 колони */
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; /* Увеличаваме разстоянието, защото има повече място */
+  }
+}
+
+/* Голям екран (Десктоп): 4 колони */
+@media (min-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+
+/* Изключително големи монитори: 5 колони (по желание) */
+@media (min-width: 1280px) {
+  .product-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

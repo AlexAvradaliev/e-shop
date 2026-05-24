@@ -1,0 +1,235 @@
+/* --- Затъмненият фон зад попапа --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачно черно */
+  backdrop-filter: blur(4px); /* Леко замъгляване на сайта отзад (модерно) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Гарантира, че е над всичко останало */
+}
+
+/* --- Самият бял прозорец --- */
+.modal-content {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 16px;
+  padding: 32px 24px;
+  position: relative;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  font-family: sans-serif;
+  animation: modalFadeIn 0.3s ease-out forwards;
+}
+
+/* Анимация за плавно появяване */
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- Хиксчето за затваряне --- */
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #1f2937;
+}
+
+/* --- Табове (Вход / Регистрация) --- */
+.modal-tabs {
+  display: flex;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #9ca3af;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.tab-btn:hover {
+  color: #4b5563;
+}
+
+.tab-btn.active {
+  color: #005cbf; /* Фирменото синьо */
+}
+
+/* Синята линия под активния таб */
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; /* Покрива сивата линия */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #005cbf;
+}
+
+/* --- Форми и полета --- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.form-group input:focus {
+  border-color: #005cbf;
+  box-shadow: 0 0 0 3px rgba(0, 92, 191, 0.1); /* Леко сияние при писане */
+}
+
+.forgot-password {
+  text-align: right;
+  margin-bottom: 24px;
+}
+
+.forgot-password a {
+  font-size: 12px;
+  color: #005cbf;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* --- Главен Бутон --- */
+.submit-btn {
+  background-color: #005cbf;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 8px;
+}
+
+.submit-btn:hover {
+  background-color: #004494;
+}
+/* --- Разделител с линии отстрани (ИЛИ / OU) --- */
+.social-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 24px 0 16px;
+  color: #9ca3af;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.social-divider span {
+  padding: 0 12px;
+}
+
+/* --- Контейнер за социалните бутони --- */
+.social-login-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Ако искаме Facebook и Apple да са един до друг на 1 ред */
+.social-row {
+  display: flex;
+  gap: 12px;
+}
+
+/* --- Самите социални бутони --- */
+.social-btn {
+  flex: 1; /* Позволява на бутоните в ред да се разпъват поравно */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.social-btn:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.social-icon {
+  font-size: 20px;
+}
+
+/* Специфични цветове за иконите на Facebook и Apple */
+.social-btn.facebook .social-icon {
+  color: #1877f2;
+}
+
+.social-btn.apple .social-icon {
+  color: #000000;
+}

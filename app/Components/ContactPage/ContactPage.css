@@ -1,0 +1,251 @@
+/* --- Основен контейнер --- */
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 4%;
+  font-family: sans-serif;
+  min-height: 70vh;
+}
+
+@media (min-width: 1024px) {
+  .contact-container {
+    padding: 60px 24px;
+  }
+}
+
+/* --- Заглавна част --- */
+.contact-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 48px auto;
+}
+
+.contact-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.contact-subtitle {
+  font-size: 16px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* --- Решетка (Сплит екран) --- */
+.contact-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (min-width: 992px) {
+  .contact-grid {
+    flex-direction: row;
+    gap: 48px;
+    align-items: flex-start;
+  }
+}
+
+/* --- Лява част: Информация --- */
+.contact-info {
+  flex: 1;
+  background-color: #f9fafb;
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.contact-info h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-icon-wrapper {
+  background-color: #e0f2fe; /* Много светло синьо */
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.info-icon {
+  color: #005cbf;
+  font-size: 20px;
+}
+
+.info-item h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 4px 0;
+}
+
+.info-item p {
+  font-size: 15px;
+  color: #4b5563;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.info-subtext {
+  font-size: 13px;
+  color: #9ca3af;
+  display: block;
+  margin-top: 4px;
+}
+
+/* --- Дясна част: Формата --- */
+.contact-form-wrapper {
+  flex: 1.5; /* Формата заема малко повече място от инфото на голям екран */
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  border: 1px solid #f3f4f6;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    flex-direction: row;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+  resize: vertical; /* Позволява на textarea да се разпъва само надолу */
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #005cbf;
+  box-shadow: 0 0 0 3px rgba(0, 92, 191, 0.1);
+}
+
+/* --- Бутон Изпрати --- */
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #005cbf;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+
+.submit-btn:hover {
+  background-color: #004494;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* --- Съобщение за Успех --- */
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 0;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon {
+  font-size: 64px;
+  color: #16a34a; /* Зелено */
+  margin-bottom: 20px;
+}
+
+.success-message h2 {
+  font-size: 24px;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.success-message p {
+  color: #4b5563;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.reset-btn {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-btn:hover {
+  background-color: #e5e7eb;
+}

@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// 1. ПОТРЕБИТЕЛИ (User) - С ДОБАВЕНИ ПОЛЕТА ЗА GOOGLE
+// ==========================================
+model User {
+  id        String    @id @default(cuid())
+  name      String?   // ДОБАВЕНО: За името, което идва от Google профила
+  email     String    @unique
+  password  String?   // Опционално, ако се логнат през външен доставчик (Google/Apple)
+  role      String    @default("user") // user или admin
+  isChecked Boolean   @default(false)  // За верификация на имейл или съгласие
+  isDeleted Boolean   @default(false)  // Софтуерно изтриване (Soft Delete)
+  provider  String    @default("credentials") // credentials, google, facebook
+  
+  emailVerified DateTime? // ДОБАВЕНО: Задължително за NextAuth OAuth доставчици
+  image         String?   // ДОБАВЕНО: За профилната снимка, която идва от Google
+  accounts      Account[] // ДОБАВЕНО: Връзка към новата таблица за социални профили
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Връзки (Relations)
+  products Product[] // Продуктите, които този админ е създал/променил
+  orders   Order[]   // Поръчките, които този регистриран потребител е направил
+}
+
+// ==========================================
+// НОВО: ТАБЛИЦА ЗА СОЦИАЛНИ ПРОФИЛИ (Account)
+// Тази таблица се изисква от NextAuth, за да знае, че даден User е вързан с Google
+// ==========================================
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// ==========================================
+// 2. ПРОДУКТИ (Product) - ОСТАВА АБСОЛЮТНО СЪЩОТО
+// ==========================================
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  brand       String?
+  description String?
+  category    String
+  price       Float    // Цена на продукта
+  poid        Float    // Тегло на продукта (за изчисляване на доставка)
+  quantite    Int      @default(0) // Наличност в склада
+  photos      String[] // Масив от низове (URL адреси на снимките в Cloudinary)
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  orderItems OrderItem[]
+}
+
+// ==========================================
+// 3. ПОРЪЧКИ (Order) - ОСТАВА АБСОЛЮТНО СЪЩОТО
+// ==========================================
+model Order {
+  id             String    @id @default(cuid())
+  
+  userId         String?
+  user           User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  name           String
+  family         String
+  email          String
+  phone          String
+
+  deliveryMethod   String    // "home" (адрес), "relay" (пункт), "pickup" (от магазин)
+  deliveryProvider String    // "Mondial Relay", "Colissimo", "Retrait Magasin"
+  relayPointId     String?   // Код на пункта (ако има)
+  relayPointName   String?   // Име/Адрес на самия пункт
+
+  zipCode        String?
+  city           String?
+  address        String?
+
+  billingZipCode String
+  billingCity    String
+  billingAddress String
+  companyName    String?   
+  siretNumber    String?   
+
+  metodPayment   String    // "card", "paypal", "cod"
+
+  paymentStatus  String    // unpaid, paid, fail
+  deliveryStatus String    @default("unshipped") 
+  
+  dateOrder      DateTime  @default(now())
+  dateShipped    DateTime? 
+
+  totalPoid      Float     
+  priceShipping  Float     
+  totalPrice     Float     
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  items          OrderItem[]
+}
+
+// ==========================================
+// 4. ПРОДУКТИ В ПОРЪЧКАТА (OrderItem) - ОСТАВА АБСОЛЮТНО СЪЩОТО
+// ==========================================
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  
+  quantity  Int     
+  price     Float   
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([email, token])
+}
+
+model VerificationCode {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  code      String
+  expires   DateTime
+  createdAt DateTime @default(now())
+}

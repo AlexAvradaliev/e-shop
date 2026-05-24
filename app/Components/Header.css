@@ -1,0 +1,344 @@
+/* Общ контейнер */
+.leclerc-header {
+	--brand-blue: #005cbf;
+	--brand-blue-hover: #004494;
+	--text-white: #ffffff;
+
+	width: 100%;
+	font-family: sans-serif;
+	border-bottom: 1px solid #e5e7eb;
+	border-radius: 12px;
+}
+
+/* --- Информационен банер (Син) --- */
+.top-banner {
+	    background-color: var(--brand-blue);
+    color: var(--text-white);
+    border-radius: 56px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 14px 16px;
+    padding: 58px 16px;
+    display: flex;
+}
+
+
+.banner-icon {
+	font-size: 24px;
+	margin-top: 2px;
+}
+
+.banner-text {
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-align: left;
+	max-width: 900px;
+}
+
+.banner-text p {
+	margin: 0;
+}
+
+/* --- Главна навигация (Бяла) --- */
+.main-nav {
+	background-color: var(--text-white);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 16px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+/* Лява част */
+.nav-left {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.menu-btn {
+	background: none;
+	border: none;
+	color: var(--brand-blue);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	cursor: pointer;
+	padding: 0;
+}
+
+.menu-btn i {
+	font-size: 32px;
+	line-height: 1;
+}
+
+.menu-btn span {
+	font-size: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin-top: 2px;
+}
+
+.logo-circle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: 3px solid var(--brand-blue);
+	border-radius: 50%;
+	text-decoration: none;
+	color: var(--brand-blue);
+	font-weight: 800;
+	font-size: 20px;
+	transition: background-color 0.2s;
+}
+
+.logo-circle:hover {
+	background-color: #f0f8ff;
+}
+
+/* Дясна част */
+.nav-right {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.icon-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	background-color: var(--brand-blue);
+	color: var(--text-white);
+	border-radius: 50%;
+	text-decoration: none;
+	font-size: 18px;
+	transition: background-color 0.2s;
+}
+
+.icon-btn:hover {
+	background-color: var(--brand-blue-hover);
+}
+
+/* --- Медия заявки (За таблет и Десктоп) --- */
+@media (min-width: 768px) {
+	.top-banner {
+		align-items: center;
+	}
+	.banner-icon {
+		margin-top: 0;
+	}
+	.banner-text {
+		font-size: 14px;
+	}
+	.main-nav {
+		padding: 16px 32px;
+	}
+	.nav-left {
+		gap: 24px;
+	}
+	.logo-circle {
+		width: 48px;
+		height: 48px;
+		font-size: 24px;
+	}
+	.nav-right {
+		gap: 16px;
+	}
+	.icon-btn {
+		width: 48px;
+		height: 48px;
+		font-size: 22px;
+	}
+}
+
+/* --- Падащо меню за език --- */
+.lang-dropdown {
+	position: relative;
+	margin-right: 8px; /* Разстояние между менюто и сините бутони */
+}
+
+.lang-btn {
+	background: none;
+	border: none;
+	font-size: 16px;
+	font-weight: 800;
+	color: var(--brand-blue);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 8px;
+	font-family: inherit;
+}
+
+/* Анимация за завъртане на стрелката */
+.lang-arrow {
+	font-size: 12px;
+	stroke-width: 1px;
+	transition: transform 0.3s ease;
+}
+
+.lang-dropdown:hover .lang-arrow {
+	transform: rotate(180deg);
+}
+
+/* Контейнерът със самите езици (Скрит по подразбиране) */
+.lang-menu {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: var(--text-white);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+	display: none; /* Крие менюто */
+	flex-direction: column;
+	min-width: 80px;
+	z-index: 100;
+	overflow: hidden; /* За да не излизат hover ефектите извън заоблените ъгли */
+}
+
+/* Показва менюто, когато мишката е върху главния бутон */
+.lang-dropdown:hover .lang-menu {
+	display: flex;
+}
+
+/* Бутоните вътре в падащото меню */
+.lang-option {
+	background: none;
+	border: none;
+	padding: 10px 16px;
+	font-size: 14px;
+	font-weight: 500;
+	color: #4b5563;
+	cursor: pointer;
+	transition: all 0.2s;
+	font-family: inherit;
+}
+
+.lang-option:hover {
+	background-color: #f3f4f6;
+	color: var(--brand-blue);
+}
+
+.lang-option.active {
+	color: var(--brand-blue);
+	font-weight: bold;
+}
+
+/* Медия заявка: Увеличава малко разстоянието на десктоп */
+@media (min-width: 768px) {
+	.lang-dropdown {
+		margin-right: 16px;
+	}
+}
+
+
+/* --- СТИЛОВЕ ЗА ПОТРЕБИТЕЛСКОТО МЕНЮ (USER DROPDOWN) --- */
+
+.user-trigger-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 20px;
+  transition: background-color 0.2s;
+}
+
+.user-trigger-btn:hover {
+  background-color: #f0f4f8; /* Лек син фон при ховър */
+}
+
+.user-short-name {
+  font-size: 13px;
+  font-weight: bold;
+  color: #002d72;
+  max-width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  width: 240px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.user-menu-header {
+  padding: 16px;
+  background: #f8f9fa;
+}
+
+.user-full-name {
+  font-weight: bold;
+  color: #002d72;
+  margin: 0;
+  font-size: 15px;
+}
+
+.user-email {
+  color: #666;
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.user-menu-divider {
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.user-menu-item {
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.user-menu-item:hover {
+  background-color: #f0f4f8;
+  color: #002d72;
+}
+
+.user-menu-item.logout-btn {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.user-menu-item.logout-btn:hover {
+  background-color: #ffebee;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

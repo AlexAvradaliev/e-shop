@@ -1,0 +1,175 @@
+/* --- Тъмен фон (Overlay) --- */
+.side-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 2000; /* Много високо, за да е над всичко */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.side-menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- Страничен панел (Самият Sidebar) --- */
+.side-menu-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px; /* Ширина на менюто */
+  max-width: 85vw; /* За много малки телефони */
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 2001; /* Над тъмния фон */
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  
+  /* Менюто е скрито наляво извън екрана по подразбиране */
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Когато добавим клас open, менюто се плъзга на екрана */
+.side-menu-panel.open {
+  transform: translateX(0);
+}
+
+/* --- Горна част на менюто (Header) --- */
+.side-menu-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.menu-logo-circle {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #005cbf;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #005cbf;
+  font-weight: 800;
+  font-size: 18px;
+  margin-right: 12px;
+}
+
+.menu-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.menu-close-btn {
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.menu-close-btn:hover {
+  color: #dc2626; /* Червено при посочване */
+}
+
+/* --- Съдържание (Връзки) --- */
+.side-menu-content {
+  flex-grow: 1;
+  overflow-y: auto; /* Позволява скролване, ако има много категории */
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  text-decoration: none;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.menu-item:hover {
+  background-color: #f0f8ff; /* Светло синьо */
+  color: #005cbf;
+}
+
+.menu-item-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-icon {
+  font-size: 20px;
+  color: #9ca3af;
+  transition: color 0.2s;
+}
+
+.menu-item:hover .menu-icon {
+  color: #005cbf;
+}
+
+/* Специален стил за Промоции */
+.menu-item.highlight {
+  color: #ea580c; /* Оранжево */
+  font-weight: bold;
+}
+
+.menu-item.highlight .menu-icon {
+  color: #ea580c;
+}
+
+.menu-item.highlight:hover {
+  background-color: #fff7ed;
+}
+
+.menu-arrow {
+  font-size: 14px;
+  color: #d1d5db;
+}
+
+/* --- Долна част --- */
+.menu-footer {
+  margin-top: auto; /* Натиска този блок най-отдолу */
+  padding-bottom: 24px;
+}
+
+.menu-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 16px 20px;
+}
+
+.menu-item.secondary {
+  color: #6b7280;
+  font-size: 15px;
+}
