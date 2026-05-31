@@ -1,57 +1,51 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from '@/server/db/prisma';
 
 export async function GET() {
+	try {
+		const now = new Date();
 
-  try {
+		// delete expired OTP codes
+		await prisma.verificationCode.deleteMany({
+			where: {
+				expires: {
+					lt: now,
+				},
+			},
+		});
 
-    const now = new Date();
+		// delete expired password reset tokens
+		await prisma.passwordResetToken.deleteMany({
+			where: {
+				expires: {
+					lt: now,
+				},
+			},
+		});
 
-    // delete expired OTP codes
-    await prisma.verificationCode.deleteMany({
-      where: {
-        expires: {
-          lt: now
-        }
-      }
-    });
+		// delete inactive users older than 24h
+		await prisma.user.deleteMany({
+			where: {
+				isChecked: false,
 
-    // delete expired password reset tokens
-    await prisma.passwordResetToken.deleteMany({
-      where: {
-        expires: {
-          lt: now
-        }
-      }
-    });
+				createdAt: {
+					lt: new Date(Date.now() - 24 * 60 * 60 * 1000),
+				},
+			},
+		});
 
-    // delete inactive users older than 24h
-    await prisma.user.deleteMany({
-      where: {
-        isChecked: false,
+		return Response.json({
+			success: true,
+		});
+	} catch (error) {
+		console.error(error);
 
-        createdAt: {
-          lt: new Date(
-            Date.now() - 24 * 60 * 60 * 1000
-          )
-        }
-      }
-    });
-
-    return Response.json({
-      success: true
-    });
-
-  } catch (error) {
-
-    console.error(error);
-
-    return Response.json(
-      {
-        success: false
-      },
-      {
-        status: 500
-      }
-    );
-  }
+		return Response.json(
+			{
+				success: false,
+			},
+			{
+				status: 500,
+			},
+		);
+	}
 }

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import AuthModal from './AuthModal/AuthModal'; 
-import { useAuthContext } from '../contexts/AuthContext'; 
+import { useAuth } from '@/features/auth/context/AuthContext';
 
 import { 
   BsInfoSquareFill, 
@@ -25,18 +25,18 @@ const Header = () => {
     // НОВО: Състояние за падащото меню на потребителя
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     
-    const { user, isAuthenticated, logout } = useAuthContext();
+    const { user, isAuthenticated, logout } = useAuth();
 
   return (
     <header className="leclerc-header">
       
-      <div className="top-banner">
+      {/* <div className="top-banner">
         <BsInfoSquareFill className="banner-icon" />
         <div className="banner-text">
           <p>La mise à jour des prix des carburants est actuellement indisponible</p>
           <p>Nous vous invitons à consulter les prix directement en magasin ou sur prix-carburants.gouv.fr</p>
         </div>
-      </div>
+      </div> */}
 
       <div className="main-nav">
         

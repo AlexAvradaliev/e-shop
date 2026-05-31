@@ -1,7 +1,7 @@
 // actions/auth.js
 'use server';
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/server/db/prisma';
 
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';

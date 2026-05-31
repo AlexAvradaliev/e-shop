@@ -1,75 +1,87 @@
-// app/api/auth/[...nextauth]/route.js
 import NextAuth from 'next-auth';
+
 import CredentialsProvider from 'next-auth/providers/credentials';
-import GoogleProvider from 'next-auth/providers/google';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import { prisma } from '@/lib/prisma';
+
 import bcrypt from 'bcryptjs';
 
+import { prisma } from '@/server/db/prisma';
+
 export const authOptions = {
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      allowDangerousEmailAccountLinking: true, // Позволява сливане на Google + Имеил/Парола
-    }),
-    CredentialsProvider({
-      name: 'credentials',
-      credentials: { email: {}, password: {} },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('Veuillez remplir tous les champs.');
-        }
+	session: {
+		strategy: 'jwt',
+	},
 
-        const user = await prisma.user.findUnique({ where: { email: credentials.email } });
+	secret: process.env.NEXTAUTH_SECRET,
 
-        if (!user || !user.password) {
-          throw new Error("Aucun compte trouvé via mot de passe. Essayez avec Google.");
-        }
+	providers: [
+		CredentialsProvider({
+			name: 'credentials',
 
-        if (!user.isChecked) {
-          throw new Error('NOT_VERIFIED'); // Фронтендът ще хване това и ще покаже OTP
-        }
+			credentials: {
+				email: {},
+				password: {},
+			},
 
-        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-        if (!isPasswordCorrect) {
-          throw new Error('Identifiants incorrects.');
-        }
+			async authorize(credentials) {
+				if (!credentials?.email || !credentials?.password) {
+					throw new Error('Email et mot de passe requis.');
+				}
 
-        return user;
-      },
-    }),
-  ],
-  callbacks: {
-    async signIn({ user, account }) {
-      if (account?.provider === 'google') {
-        // Автоматично потвърждаване на Google потребителите
-        await prisma.user.update({
-          where: { email: user.email },
-          data: { isChecked: true, emailVerified: new Date(), provider: 'google' },
-        });
-      }
-      return true;
-    },
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id;
-        session.user.role = token.role;
-      }
-      return session;
-    },
-  },
-  session: { strategy: 'jwt' },
-  secret: process.env.NEXTAUTH_SECRET,
+				const user = await prisma.user.findUnique({
+					where: {
+						email: credentials.email,
+					},
+				});
+
+				if (!user || !user.password) {
+					throw new Error('Utilisateur introuvable.');
+				}
+
+				if (!user.isChecked) {
+					throw new Error('Veuillez vérifier votre adresse e-mail.');
+				}
+
+				const passwordMatch = await bcrypt.compare(
+					credentials.password,
+					user.password,
+				);
+
+				if (!passwordMatch) {
+					throw new Error('Mot de passe incorrect.');
+				}
+
+				return {
+					id: user.id,
+					email: user.email,
+					role: user.role,
+				};
+			},
+		}),
+	],
+
+	callbacks: {
+		async jwt({ token, user }) {
+			if (user) {
+				token.role = user.role;
+			}
+
+			return token;
+		},
+
+		async session({ session, token }) {
+			if (session.user) {
+				session.user.role = token.role;
+			}
+
+			return session;
+		},
+	},
+
+	pages: {
+		signIn: '/',
+	},
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };

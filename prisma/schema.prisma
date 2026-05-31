@@ -7,134 +7,117 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ==========================================
-// 1. ПОТРЕБИТЕЛИ (User) - С ДОБАВЕНИ ПОЛЕТА ЗА GOOGLE
-// ==========================================
 model User {
-  id        String    @id @default(cuid())
-  name      String?   // ДОБАВЕНО: За името, което идва от Google профила
-  email     String    @unique
-  password  String?   // Опционално, ако се логнат през външен доставчик (Google/Apple)
-  role      String    @default("user") // user или admin
-  isChecked Boolean   @default(false)  // За верификация на имейл или съгласие
-  isDeleted Boolean   @default(false)  // Софтуерно изтриване (Soft Delete)
-  provider  String    @default("credentials") // credentials, google, facebook
-  
-  emailVerified DateTime? // ДОБАВЕНО: Задължително за NextAuth OAuth доставчици
-  image         String?   // ДОБАВЕНО: За профилната снимка, която идва от Google
-  accounts      Account[] // ДОБАВЕНО: Връзка към новата таблица за социални профили
+  id             String          @id @default(cuid())
+  name           String?
+  email          String          @unique
+  password       String?
+  role           Role            @default(user)
+  isActive       Boolean         @default(true)
+  isChecked      Boolean         @default(false)
+  isDeleted      Boolean         @default(false)
+  provider       Provider        @default(credentials)
+  emailVerified  DateTime?
+  image          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  accounts       Account[]
+  cartItems      CartItem[]
+  orders         Order[]
+  products       Product[]
+  securityEvents SecurityEvent[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Връзки (Relations)
-  products Product[] // Продуктите, които този админ е създал/променил
-  orders   Order[]   // Поръчките, които този регистриран потребител е направил
+  @@index([email])
 }
 
-// ==========================================
-// НОВО: ТАБЛИЦА ЗА СОЦИАЛНИ ПРОФИЛИ (Account)
-// Тази таблица се изисква от NextAuth, за да знае, че даден User е вързан с Google
-// ==========================================
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
-// ==========================================
-// 2. ПРОДУКТИ (Product) - ОСТАВА АБСОЛЮТНО СЪЩОТО
-// ==========================================
 model Product {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
+  slug        String      @unique
   name        String
   brand       String?
   description String?
   category    String
-  price       Float    // Цена на продукта
-  poid        Float    // Тегло на продукта (за изчисляване на доставка)
-  quantite    Int      @default(0) // Наличност в склада
-  photos      String[] // Масив от низове (URL адреси на снимките в Cloudinary)
-  
+  price       Float
+  poid        Float
+  quantite    Int         @default(0)
+  photos      String[]
+  isActive    Boolean     @default(true)
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+  user        User        @relation(fields: [userId], references: [id])
 
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  orderItems OrderItem[]
+  @@index([slug])
+  @@index([category])
 }
 
-// ==========================================
-// 3. ПОРЪЧКИ (Order) - ОСТАВА АБСОЛЮТНО СЪЩОТО
-// ==========================================
 model Order {
-  id             String    @id @default(cuid())
-  
-  userId         String?
-  user           User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id               String         @id @default(cuid())
+  userId           String?
+  name             String
+  family           String
+  email            String
+  phone            String
+  deliveryMethod   String
+  deliveryProvider String
+  relayPointId     String?
+  relayPointName   String?
+  zipCode          String?
+  city             String?
+  address          String?
+  billingZipCode   String
+  billingCity      String
+  billingAddress   String
+  companyName      String?
+  siretNumber      String?
+  metodPayment     String
+  paymentStatus    PaymentStatus
+  deliveryStatus   DeliveryStatus @default(unshipped)
+  dateOrder        DateTime       @default(now())
+  dateShipped      DateTime?
+  totalPoid        Float
+  priceShipping    Float
+  totalPrice       Float
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  user             User?          @relation(fields: [userId], references: [id])
+  items            OrderItem[]
 
-  name           String
-  family         String
-  email          String
-  phone          String
-
-  deliveryMethod   String    // "home" (адрес), "relay" (пункт), "pickup" (от магазин)
-  deliveryProvider String    // "Mondial Relay", "Colissimo", "Retrait Magasin"
-  relayPointId     String?   // Код на пункта (ако има)
-  relayPointName   String?   // Име/Адрес на самия пункт
-
-  zipCode        String?
-  city           String?
-  address        String?
-
-  billingZipCode String
-  billingCity    String
-  billingAddress String
-  companyName    String?   
-  siretNumber    String?   
-
-  metodPayment   String    // "card", "paypal", "cod"
-
-  paymentStatus  String    // unpaid, paid, fail
-  deliveryStatus String    @default("unshipped") 
-  
-  dateOrder      DateTime  @default(now())
-  dateShipped    DateTime? 
-
-  totalPoid      Float     
-  priceShipping  Float     
-  totalPrice     Float     
-
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  items          OrderItem[]
+  @@index([userId])
+  @@index([email])
 }
 
-// ==========================================
-// 4. ПРОДУКТИ В ПОРЪЧКАТА (OrderItem) - ОСТАВА АБСОЛЮТНО СЪЩОТО
-// ==========================================
 model OrderItem {
   id        String  @id @default(cuid())
   orderId   String
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId String
+  quantity  Int
+  price     Float
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id])
-  
-  quantity  Int     
-  price     Float   
+
+  @@index([orderId])
 }
 
 model PasswordResetToken {
@@ -144,7 +127,7 @@ model PasswordResetToken {
   expires   DateTime
   createdAt DateTime @default(now())
 
-  @@unique([email, token])
+  @@index([email])
 }
 
 model VerificationCode {
@@ -153,4 +136,75 @@ model VerificationCode {
   code      String
   expires   DateTime
   createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  userEmail String?
+  ip        String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([userEmail])
+}
+
+model SecurityEvent {
+  id        String   @id @default(cuid())
+  type      String
+  ip        String?
+  userId    String?
+  email     String?
+  route     String?
+  method    String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model StripeEvent {
+  id            String   @id @default(cuid())
+  stripeEventId String   @unique
+  type          String
+  processed     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum Provider {
+  credentials
+  google
+  facebook
+}
+
+enum PaymentStatus {
+  unpaid
+  paid
+  fail
+}
+
+enum DeliveryStatus {
+  unshipped
+  shipped
+  delivered
 }

@@ -1,0 +1,17 @@
+import { PERMISSIONS }
+from './permissions';
+
+export const ROLES = {
+  ADMIN: [
+    PERMISSIONS.MANAGE_PRODUCTS,
+    PERMISSIONS.MANAGE_ORDERS,
+    PERMISSIONS.MANAGE_USERS,
+    PERMISSIONS.VIEW_ANALYTICS,
+  ],
+
+  STAFF: [
+    PERMISSIONS.MANAGE_ORDERS,
+  ],
+
+  USER: [],
+};
