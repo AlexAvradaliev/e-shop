@@ -1,0 +1,54 @@
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  color: #344054;
+  font-weight: 900;
+}
+
+.input {
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #c9d6e5;
+  border-radius: 14px;
+  color: #101828;
+  font: inherit;
+}
+
+.input:focus {
+  border-color: #005caf;
+  box-shadow: 0 0 0 4px rgba(0, 92, 175, 0.12);
+  outline: none;
+}
+
+.button {
+  min-height: 50px;
+  border: 0;
+  border-radius: 999px;
+  background: #005caf;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 1000;
+  box-shadow: 0 14px 28px rgba(0, 92, 175, 0.24);
+}
+
+.button:hover {
+  background: #004f96;
+}
+
+.switchText {
+  margin: 0;
+  color: #667085;
+  text-align: center;
+}
+
+.switchText a {
+  color: #005caf;
+  font-weight: 900;
+  text-decoration: none;
+}

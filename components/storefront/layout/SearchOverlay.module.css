@@ -1,0 +1,57 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: start center;
+  padding: 90px 20px;
+  background: rgba(16, 24, 40, 0.48);
+}
+
+.panel {
+  width: min(100%, 720px);
+  display: flex;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(16, 24, 40, 0.24);
+}
+
+.label {
+  flex: 1;
+  display: grid;
+  gap: 8px;
+  color: #344054;
+  font-weight: 900;
+}
+
+.input {
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #c9d6e5;
+  border-radius: 14px;
+  font: inherit;
+}
+
+.close,
+.button {
+  align-self: end;
+  min-height: 46px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 1000;
+}
+
+.close {
+  background: #e8f1fb;
+  color: #005caf;
+}
+
+.button {
+  background: #005caf;
+  color: #ffffff;
+}

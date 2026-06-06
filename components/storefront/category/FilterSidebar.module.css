@@ -1,0 +1,46 @@
+.sidebar {
+  align-self: start;
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid #dde6f3;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 14px 32px rgba(22, 35, 58, 0.08);
+}
+
+.title {
+  margin: 0;
+  color: #101828;
+  font-size: 1.35rem;
+}
+
+.group {
+  display: grid;
+  gap: 12px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #344054;
+  font-weight: 800;
+}
+
+.option input {
+  width: 18px;
+  height: 18px;
+  accent-color: #005caf;
+}
+
+.button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: #005caf;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+}

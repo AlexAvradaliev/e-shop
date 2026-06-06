@@ -1,22 +1,7 @@
-import Header from "./Components/Header";
-import Card from "./Components/Card/Card";
-import PaymentForm from "./Components/PaymentForm/PaymentForm";
-import WishlistPage from "./Components/WishlistPage/WishlistPage";
-import CartPage from "./Components/CartPage/CartPage";
-import ContactPage from "./Components/ContactPage/ContactPage";
-import AdminDashboard from "./Components/AdminDashboard/AdminDashboard";
+import HomePage from "@/components/storefront/home/HomePage.js";
 
-
-export default function Home() {
+export default function Page() {
   return (
-    <div >
-      <Header />
-      <Card />
-      <PaymentForm />
-      <WishlistPage />
-      <CartPage />
-      <ContactPage />
-      <AdminDashboard />
-    </div>
+    <HomePage />
   );
 }

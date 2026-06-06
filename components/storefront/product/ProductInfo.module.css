@@ -1,0 +1,54 @@
+.info {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: 30px;
+  border: 1px solid #dde6f3;
+  border-radius: 30px;
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(22, 35, 58, 0.1);
+}
+
+.eyebrow {
+  margin: 0;
+  color: #005caf;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: #101828;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1;
+}
+
+.sku {
+  margin: 0;
+  color: #667085;
+  font-weight: 800;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #e8f1fb;
+  color: #005caf;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.description {
+  margin: 0;
+  color: #475467;
+  font-size: 1rem;
+  line-height: 1.65;
+}

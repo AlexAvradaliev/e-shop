@@ -1,0 +1,21 @@
+.bar {
+  background: #005caf;
+  color: #ffffff;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.inner a {
+  color: #ffffff;
+  text-decoration: none;
+}

@@ -1,14 +1,30 @@
-import { AuthProvider } from '@/features/auth/context/AuthContext';
+import StorefrontLayout from "@/components/storefront/layout/StorefrontLayout.js";
+import StorefrontSeo from "@/components/storefront/seo/StorefrontSeo.js";
 
-export default function RootLayout({
-  children,
-}) {
+export const metadata = {
+  title: {
+    default: "E-Shop V2",
+    template: "%s | E-Shop V2",
+  },
+  description: "Backend-first Clean Architecture e-commerce project",
+  metadataBase: new URL("https://example.com"),
+  openGraph: {
+    title: "E-Shop V2",
+    description: "Modern supermarket-inspired e-commerce storefront.",
+    url: "https://example.com",
+    siteName: "E-Shop V2",
+    type: "website",
+  },
+};
+
+export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="bg">
       <body>
-        <AuthProvider>
+        <StorefrontSeo />
+        <StorefrontLayout>
           {children}
-        </AuthProvider>
+        </StorefrontLayout>
       </body>
     </html>
   );

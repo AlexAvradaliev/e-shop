@@ -1,0 +1,25 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 18px;
+}
+
+.link {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #005caf;
+  font-weight: 900;
+  text-decoration: none;
+  box-shadow: 0 10px 22px rgba(22, 35, 58, 0.08);
+}
+
+.status {
+  color: #344054;
+  font-weight: 900;
+}

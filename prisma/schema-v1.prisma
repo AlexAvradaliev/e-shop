@@ -1,0 +1,210 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String          @id @default(cuid())
+  name           String?
+  email          String          @unique
+  password       String?
+  role           Role            @default(user)
+  isActive       Boolean         @default(true)
+  isChecked      Boolean         @default(false)
+  isDeleted      Boolean         @default(false)
+  provider       Provider        @default(credentials)
+  emailVerified  DateTime?
+  image          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  accounts       Account[]
+  cartItems      CartItem[]
+  orders         Order[]
+  products       Product[]
+  securityEvents SecurityEvent[]
+
+  @@index([email])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  slug        String      @unique
+  name        String
+  brand       String?
+  description String?
+  category    String
+  price       Float
+  poid        Float
+  quantite    Int         @default(0)
+  photos      String[]
+  isActive    Boolean     @default(true)
+  userId      String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+  user        User        @relation(fields: [userId], references: [id])
+
+  @@index([slug])
+  @@index([category])
+}
+
+model Order {
+  id               String         @id @default(cuid())
+  userId           String?
+  name             String
+  family           String
+  email            String
+  phone            String
+  deliveryMethod   String
+  deliveryProvider String
+  relayPointId     String?
+  relayPointName   String?
+  zipCode          String?
+  city             String?
+  address          String?
+  billingZipCode   String
+  billingCity      String
+  billingAddress   String
+  companyName      String?
+  siretNumber      String?
+  metodPayment     String
+  paymentStatus    PaymentStatus
+  deliveryStatus   DeliveryStatus @default(unshipped)
+  dateOrder        DateTime       @default(now())
+  dateShipped      DateTime?
+  totalPoid        Float
+  priceShipping    Float
+  totalPrice       Float
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  user             User?          @relation(fields: [userId], references: [id])
+  items            OrderItem[]
+
+  @@index([userId])
+  @@index([email])
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model VerificationCode {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  code      String
+  expires   DateTime
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  userEmail String?
+  ip        String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([userEmail])
+}
+
+model SecurityEvent {
+  id        String   @id @default(cuid())
+  type      String
+  ip        String?
+  userId    String?
+  email     String?
+  route     String?
+  method    String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model StripeEvent {
+  id            String   @id @default(cuid())
+  stripeEventId String   @unique
+  type          String
+  processed     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum Provider {
+  credentials
+  google
+  facebook
+}
+
+enum PaymentStatus {
+  unpaid
+  paid
+  fail
+}
+
+enum DeliveryStatus {
+  unshipped
+  shipped
+  delivered
+}

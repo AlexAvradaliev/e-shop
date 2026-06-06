@@ -1,0 +1,64 @@
+.card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #dde6f3;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 14px 32px rgba(22, 35, 58, 0.08);
+}
+
+.imagePlaceholder {
+  min-height: 150px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 32% 32%, rgba(245, 130, 32, 0.26), transparent 28%),
+    linear-gradient(135deg, #e8f1fb, #ffffff);
+}
+
+.name {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.name a {
+  color: #101828;
+  text-decoration: none;
+}
+
+.price {
+  margin: 0;
+  color: #f58220;
+  font-size: 1.35rem;
+  font-weight: 1000;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.primary {
+  background: #005caf;
+  color: #ffffff;
+}
+
+.secondary {
+  border: 0;
+  background: #fff4e8;
+  color: #b45309;
+  cursor: pointer;
+}

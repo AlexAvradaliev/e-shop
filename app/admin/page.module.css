@@ -1,0 +1,43 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid #dde6f3;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(22, 35, 58, 0.08);
+}
+
+.cardTitle {
+  margin: 0;
+  color: #101828;
+  font-size: 1.25rem;
+}
+
+.cardDescription {
+  margin: 0;
+  color: #667085;
+  line-height: 1.6;
+}
+
+.cardLink {
+  color: #005caf;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.cardLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

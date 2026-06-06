@@ -1,0 +1,73 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(22, 35, 58, 0.08);
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 16px 24px;
+}
+
+.logo {
+  color: #005caf;
+  font-size: 1.5rem;
+  font-weight: 1000;
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconButton,
+.menuButton,
+.iconLink,
+.cartLink {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.iconButton,
+.menuButton {
+  border: 0;
+  cursor: pointer;
+}
+
+.iconButton,
+.iconLink {
+  background: #e8f1fb;
+  color: #005caf;
+}
+
+.cartLink {
+  background: #f58220;
+  color: #ffffff;
+}
+
+.menuButton {
+  display: none;
+  background: #005caf;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .menuButton {
+    display: inline-flex;
+  }
+}

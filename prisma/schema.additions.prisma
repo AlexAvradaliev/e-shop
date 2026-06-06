@@ -1,0 +1,27 @@
+model Coupon {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  type      String
+  value     Float
+  active    Boolean  @default(true)
+  expiresAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InventoryItem {
+  id        String   @id @default(cuid())
+  productId String   @unique
+  quantity  Int      @default(0)
+  reserved  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+// Add to existing Product model:
+// inventory InventoryItem?
+
+// Add to existing User model when needed:
+// role String @default("USER")

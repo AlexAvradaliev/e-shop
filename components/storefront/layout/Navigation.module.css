@@ -1,0 +1,21 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav a {
+  color: #344054;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: #005caf;
+}
+
+@media (max-width: 900px) {
+  .nav {
+    display: none;
+  }
+}

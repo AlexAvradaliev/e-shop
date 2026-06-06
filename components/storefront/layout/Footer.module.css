@@ -1,0 +1,31 @@
+.footer {
+  background: #101828;
+  color: #ffffff;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 42px 24px;
+}
+
+.logo {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.8rem;
+}
+
+.text {
+  max-width: 360px;
+  color: #d0d5dd;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+}

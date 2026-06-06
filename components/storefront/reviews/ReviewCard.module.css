@@ -1,0 +1,46 @@
+.card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #dde6f3;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(22, 35, 58, 0.07);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.author {
+  margin: 0;
+  color: #101828;
+  font-size: 1.05rem;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #fff4e8;
+  color: #b45309;
+  font-weight: 1000;
+}
+
+.comment {
+  margin: 0;
+  color: #475467;
+  line-height: 1.6;
+}
+
+.date {
+  margin: 0;
+  color: #98a2b3;
+  font-size: 0.9rem;
+  font-weight: 800;
+}

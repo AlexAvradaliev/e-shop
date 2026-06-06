@@ -1,0 +1,73 @@
+.card {
+  overflow: hidden;
+  border: 1px solid #dde6f3;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(22, 35, 58, 0.08);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  padding: 16px;
+  background: #005caf;
+  color: #ffffff;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.table td {
+  padding: 16px;
+  border-top: 1px solid #edf2f7;
+  color: #344054;
+}
+
+.table tr:hover td {
+  background: #f8fbff;
+}
+
+.empty {
+  padding: 28px;
+  border: 1px dashed #b8c7da;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #667085;
+  text-align: center;
+}
+
+.link {
+  color: #005caf;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.deleteButton {
+  margin-left: 12px;
+  border: 0;
+  background: transparent;
+  color: #d92d20;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #e8f1fb;
+  color: #005caf;
+  font-size: 0.8rem;
+  font-weight: 800;
+}

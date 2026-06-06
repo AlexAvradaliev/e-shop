@@ -1,0 +1,22 @@
+.mega {
+  border-top: 1px solid #edf2f7;
+  background: #f8fbff;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 1180px;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding: 10px 24px;
+}
+
+.inner a {
+  white-space: nowrap;
+  color: #005caf;
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-decoration: none;
+}

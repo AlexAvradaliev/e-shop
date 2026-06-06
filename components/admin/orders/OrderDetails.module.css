@@ -1,0 +1,45 @@
+.details {
+  display: grid;
+  gap: 18px;
+  padding: 26px;
+  border: 1px solid #dde6f3;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(22, 35, 58, 0.08);
+}
+
+.title {
+  margin: 0;
+  color: #101828;
+  font-size: 1.6rem;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metaItem {
+  padding: 16px;
+  border-radius: 18px;
+  background: #f8fbff;
+  color: #344054;
+}
+
+.items {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.empty {
+  color: #667085;
+}
+
+@media (max-width: 760px) {
+  .meta {
+    grid-template-columns: 1fr;
+  }
+}
